@@ -22,6 +22,10 @@ console.log(" Valiant Academy is an institute that makes Heroes out of plebians.
 var goblin_01 = new Enemy("Goblin Scion", 5, 1, 20, 0, 5);
 doBattle(player, goblin_01);
 
+console.log("\nHeh, that was easy, but it looks like the goblin had a friend!");
+var goblin_02 = createEnemy("Goblin Dirtbag", 2);
+doBattle(player, goblin_02);
+
 console.log("\nWe hope you had a fun time with Valiant Academy!");
 
 
@@ -59,6 +63,35 @@ function Enemy(name, atk, def, hp, mp, xp_val){
 	totalEnemies++; 
 }
 
+function createEnemy(name, difficulty){
+	var atk = getIntBetween(5, 10);
+	var def = getIntBetween (0, 5);
+	var hp = getIntBetween(15, 25);
+	var mp = getIntBetween(0, 7);
+	var xp_val = getIntBetween(5, 10);
+	var multiplier;
+
+	if (typeof difficulty === "string"){ difficulty = difficulty.toLowerCase(); }
+
+	if (difficulty === 1 || difficulty === "easy"){ multiplier = 1; }
+	if (difficulty === 2 || difficulty === "average"){ multiplier = 2; }
+	if (difficulty === 3 || difficulty === "challenge"){ multiplier = 4; }
+	if (difficulty === 4 || difficulty === "damn"){ multiplier = 7; }
+	if (difficulty === 5 || difficulty === "nightmare"){ multiplier = 11; }
+
+	atk *= multiplier;
+	def *=multiplier;
+	hp *= multiplier;
+	mp *= multiplier;
+	xp_val *= multiplier;
+
+	return new Enemy(name, atk, def, hp, mp, xp_val);
+}
+
+function getIntBetween(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 function battleMenu(){
 	selection = + prompt("\n Battle menu\n1: Attack\n2: Defend\n3: Abilities\n4: Status\n5: Enemy Status\n Enter a choice: ");
 	// Checks for valid input
@@ -74,14 +107,14 @@ function doBattle(x, y){
 	console.log("\t\t\tVS. " + y.name);
 	do { battleMenu();
 		switch(selection){
-	        case 1: x.hp  -= Math.max(0,(y.atk - x.def));
-	            	y.hp  -= Math.max(0,(x.atk - y.def));
+	        case 1: x.hp  -= Math.max(0, (y.atk - x.def));
+	            	y.hp  -= Math.max(0, (x.atk - y.def));
 	            	console.log(x.name + " deals " + Math.max(0,(x.atk - y.def)) + " damage and takes " + Math.max(0,(y.atk - x.def)) + " damage.\n" + x.name + " has " + Math.max(0,x.hp) + " health and the opposing " + y.name + " has " + Math.max(0,y.hp) + " health left." );
 	            break;
 	        case 2: x.def  *= 2;
-	            	x.hp  -= Math.max(0,(y.atk - x.def));
+	            	x.hp  -= Math.max(0, (y.atk - x.def));
 	            	x.def /= 2;
-	            	console.log(x.name + " takes a defensive stance.\n" + x.name + " takes " + Math.max(0,(y.atk - x.def)) + " damage.\n" + x.name + " has " + Math.max(0,x.hp) + " health and the opposing " + y.name + " has " + Math.max(0,y.hp) + " health left.");
+	            	console.log(x.name + " takes a defensive stance.\n" + x.name + " takes " + Math.max(0, (y.atk - x.def)) + " damage.\n" + x.name + " has " + Math.max(0,x.hp) + " health and the opposing " + y.name + " has " + Math.max(0,y.hp) + " health left.");
 	            break;
 	        case 3: ability = + prompt("\n Ability menu\n1: Power Attack - 2 mp\n2: Meditate - gain 3 mp\n 3: Heal - 3 mp\n4: Back\nEnter a choice:");
 					while (ability>4 || ability<1){
@@ -90,27 +123,27 @@ function doBattle(x, y){
 					switch(ability){
 						case 1: if (x.mp <2) console.log("Insufficient mana.\nOpposing " + y.name + " took advantage of your foolishness to attack.");
 								else { x.atk  *= 2;
-									console.log(x.name + "'s weapon is infused with mana!\n" + x.name + " deals " + Math.max(0,(x.atk - y.def)) + " damage and takes " + Math.max(0,(y.atk - x.def)) + " damage.");
-									y.hp  -= Math.max(0,(x.atk - y.def));
+									console.log(x.name + "'s weapon is infused with mana!\n" + x.name + " deals " + Math.max(0, (x.atk - y.def)) + " damage and takes " + Math.max(0,(y.atk - x.def)) + " damage.");
+									y.hp  -= Math.max(0, (x.atk - y.def));
 									x.atk /= 2;x.mp  -= 2;
 								}
-								x.hp  -= Math.max(0,(y.atk - x.def));
-	            				console.log(x.name + " has " + Math.max(0,x.hp) + " health and the opposing " + y.name + " has " + Math.max(0,y.hp) + " health left.");
+								x.hp  -= Math.max(0, (y.atk - x.def));
+	            				console.log(x.name + " has " + Math.max(0, x.hp) + " health and the opposing " + y.name + " has " + Math.max(0, y.hp) + " health left.");
 							break;
 						case 2: console.log(x.name + " calls forth the mana of Valiant Academy.");
-								x.mp=Math.min(x.max_mp, x.mp += 3);
-								console.log(x.name + " takes " + Math.max(0,(y.atk - x.def)) + " damage.");
-								x.hp  -= Math.max(0,(y.atk - x.def));
-	            				console.log(x.name + " has " + Math.max(0,x.hp) + " health and the opposing " + y.name + " has " + Math.max(0,y.hp) + " health left.");
+								x.mp = Math.min(x.max_mp, x.mp += 3);
+								console.log(x.name + " takes " + Math.max(0, (y.atk - x.def)) + " damage.");
+								x.hp  -= Math.max(0, (y.atk - x.def));
+	            				console.log(x.name + " has " + Math.max(0, x.hp) + " health and the opposing " + y.name + " has " + Math.max(0, y.hp) + " health left.");
 							break;
 						case 3: if (x.mp <3) console.log("Insufficient mana.\nOpposing " + y.name + " took advantage of your foolishness to attack.");
 								else { console.log(x.name + " uses Valiant Academy's power to recover " + Math.floor(x.max_hp * 0.2) + " health!");
 									x.hp=Math.min(x.max_hp,x.hp +=Math.floor(x.max_hp * 0.2));
 									x.mp  -= 3;
 								}
-								x.hp  -= Math.max(0,(y.atk - x.def));
-								console.log(x.name + " takes " + Math.max(0,(y.atk - x.def)) + " damage.");
-	            				console.log(x.name + " has " + Math.max(0,x.hp) + " health and the opposing " + y.name + " has " + Math.max(0,y.hp) + " health left.");
+								x.hp  -= Math.max(0, (y.atk - x.def));
+								console.log(x.name + " takes " + Math.max(0, (y.atk - x.def)) + " damage.");
+	            				console.log(x.name + " has " + Math.max(0, x.hp) + " health and the opposing " + y.name + " has " + Math.max(0, y.hp) + " health left.");
 							break;
 						case 4: // Empty on purpose.
 							break;
