@@ -16,13 +16,13 @@ var theDate = new Date();
 var theHour = theDate.getHours();
 function greet(name){ return theHour < 12 ? "Good Morning, " + name + "." : (theHour<18 ? "Good Afternoon, " + name + "." : "Good Evening, " + name + "."); }
 
-console.log(greet(playerName) + "\n\t\t Welcome to Valiant Academy!");
+console.log(greet(playerName) + "\n\n\t\t Welcome to Valiant Academy!");
 console.log(" Valiant Academy is an institute that makes Heroes out of plebians.\nYou've always wanted to be a Hero, but do you have what it takes?\nYour first test will be defeating this goblin!");
 
 var goblin_01 = new Enemy("Goblin Scion", 5, 1, 20, 0, 5);
 doBattle(player, goblin_01);
 
-console.log("We hope you had a fun time with Valiant Academy!");
+console.log("\nWe hope you had a fun time with Valiant Academy!");
 
 
 // Capitalizes first letter and decapitalizes the rest, returns that as a string e.g. dErPy becomes Derpy.
@@ -38,13 +38,14 @@ function Hero(name, atk, def, hp, mp){
 	this.hp = hp;
 	this.mp = mp;
 	this.max_mp = mp;
-	lvl = 1;
-	race = "Human";
-	exp = 0;
+	this.lvl = 1;
+	this.race = "Human";
+	this.exp = 0;
 	// Add experience (from enemy.xp_val )
-	function addExperience(exp){ this.exp += exp; }
+	this.addExperience = function(val){ this.exp += val; }
 }
 
+var totalEnemies = 0;
 // Enemy Constructor
 function Enemy(name, atk, def, hp, mp, xp_val){
 	this.name = name;
@@ -55,6 +56,7 @@ function Enemy(name, atk, def, hp, mp, xp_val){
 	this.mp = mp;
 	this.max_mp = mp;
 	this.xp_val = xp_val;
+	totalEnemies++; 
 }
 
 function battleMenu(){
@@ -69,7 +71,7 @@ function doBattle(x, y){
 	// Set hp and mp to max for new battle;
 	x.mp = x.max_mp;
 	x.hp = x.max_hp;
-	console.log("\t\t\tVs." + y.name);
+	console.log("\t\t\tVS. " + y.name);
 	do { battleMenu();
 		switch(selection){
 	        case 1: x.hp  -= Math.max(0,(y.atk - x.def));
@@ -122,14 +124,14 @@ function doBattle(x, y){
 						
 			} while(x.hp > 0 && y.hp > 0);
 
-	if (x.hp === y.hp){
-		return "It is a double K.O.";
+	if (x.hp <= 0 && y.hp <= 0){
+		console.log("It is a double K.O.");
 	}
-	else if (x.hp > y.hp){
+	else if (y.hp <= 0){
 		x.addExperience(y.xp_val);
-		return x.name + " is the victor!\n" + x.name + " gained " + y.xp_val + " experience!\n" + "Current experience: " + x.exp + "/50.";
+		console.log(x.name + " is the victor!\n" + x.name + " gained " + y.xp_val + " experience!\n" + "Current experience: " + x.exp + "/50.");
 	}
 	else {
-		return y.name + " has slain you!";
+		console.log(y.name + " has slain you!");
 	}
 } // End of doBattle
