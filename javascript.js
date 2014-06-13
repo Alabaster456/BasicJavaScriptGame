@@ -104,7 +104,7 @@ function doBattle(x, y){
 	// Set hp and mp to max for new battle;
 	x.mp = x.max_mp;
 	x.hp = x.max_hp;
-	console.log("\t\t\tVS. " + y.name);
+	console.log("\n\t\t\tVS. " + y.name);
 	do { battleMenu();
 		switch(selection){
 	        case 1: x.hp  -= Math.max(0, (y.atk - x.def));
