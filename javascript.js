@@ -3,6 +3,7 @@ FAQ -
 *the ternary: ? operator is basically a shortcut for if-else. condition ? runs if true : runs if false;
 read more: http://www.codecademy.com/glossary/javascript/ternary-operator
 * To create enemies Just use the enemy constructor (look at the example goblin on line 22, and the constructor itself on line 49)
+* Alternatively you can now use the createEnemy function passing only the name, and the difficulty you want  (1-5) or  easy, average, challenge, damn, and nightmare.
 * To add more battles just user (player, enemy)
 * \n makes a new line. \t uses a tab space. 
 
@@ -10,6 +11,7 @@ read more: http://www.codecademy.com/glossary/javascript/ternary-operator
 
 var playerName = prompt("What is your name?");
 playerName = fixName(playerName);
+// Creates player character with 10 attack, 3 defense, 25 hp, and 7 mp. 
 var player = new Hero(playerName, 10, 3, 25, 7);
 
 var theDate = new Date();
@@ -23,6 +25,7 @@ var goblin_01 = new Enemy("Goblin Scion", 5, 1, 20, 0, 5);
 doBattle(player, goblin_01);
 
 console.log("\nHeh, that was easy, but it looks like the goblin had a friend!");
+// Randomly generated enemy, name, and difficulty.
 var goblin_02 = createEnemy("Goblin Dirtbag", 2);
 doBattle(player, goblin_02);
 
@@ -45,7 +48,8 @@ function Hero(name, atk, def, hp, mp){
 	this.lvl = 1;
 	this.race = "Human";
 	this.exp = 0;
-	// Add experience (from enemy.xp_val )
+	this.goal_exp = 50;
+	// Add experience function
 	this.addExperience = function(val){ this.exp += val; }
 }
 
@@ -63,12 +67,13 @@ function Enemy(name, atk, def, hp, mp, xp_val){
 	totalEnemies++; 
 }
 
+// Random enemy constructor, only pass name, and difficulty(1 - 5) or easy, average, challenge, damn, and nightmare
 function createEnemy(name, difficulty){
-	var atk = getIntBetween(5, 10);
-	var def = getIntBetween (0, 5);
-	var hp = getIntBetween(15, 25);
+	var atk = getIntBetween(3, 7);
+	var def = getIntBetween (0, 3);
+	var hp = getIntBetween(10, 25);
 	var mp = getIntBetween(0, 7);
-	var xp_val = getIntBetween(5, 10);
+	var xp_val = getIntBetween(5, 12);
 	var multiplier;
 
 	if (typeof difficulty === "string"){ difficulty = difficulty.toLowerCase(); }
@@ -88,23 +93,26 @@ function createEnemy(name, difficulty){
 	return new Enemy(name, atk, def, hp, mp, xp_val);
 }
 
+// Generates a random integer between min and max value. 
 function getIntBetween(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+// battleMenu function to recursively obtain player decisions
 function battleMenu(){
 	selection = + prompt("\n Battle menu\n1: Attack\n2: Defend\n3: Abilities\n4: Status\n5: Enemy Status\n Enter a choice: ");
 	// Checks for valid input
-	while (selection > 5 || selection < 1){
-		selection = + prompt("Invalid choice.\n Enter a choice(1-5)");
-	}
+	while (selection > 5 || selection < 1){ selection = + prompt("Out of bounds.\n Enter a choice(1-5)"); }
+	while (isNaN(selection)){ selection = + prompt("Input must be an integer(1-5)"); }
 }
 
 function doBattle(x, y){
 	// Set hp and mp to max for new battle;
 	x.mp = x.max_mp;
 	x.hp = x.max_hp;
-	console.log("\n\t\t\tVS. " + y.name);
+	// Display current enemy
+	console.log("\t\t\tVS. " + y.name);
+	// Battle loop - heart of the game
 	do { battleMenu();
 		switch(selection){
 	        case 1: x.hp  -= Math.max(0, (y.atk - x.def));
@@ -116,10 +124,10 @@ function doBattle(x, y){
 	            	x.def /= 2;
 	            	console.log(x.name + " takes a defensive stance.\n" + x.name + " takes " + Math.max(0, (y.atk - x.def)) + " damage.\n" + x.name + " has " + Math.max(0,x.hp) + " health and the opposing " + y.name + " has " + Math.max(0,y.hp) + " health left.");
 	            break;
-	        case 3: ability = + prompt("\n Ability menu\n1: Power Attack - 2 mp\n2: Meditate - gain 3 mp\n 3: Heal - 3 mp\n4: Back\nEnter a choice:");
-					while (ability>4 || ability<1){
-						ability = + prompt("Invalid choice.\n Enter a choice(1-4)");
-						}
+	        case 3: var ability = + prompt("\n Ability menu\n1: Power Attack - 2 mp\n2: Meditate - gain 3 mp\n 3: Heal - 3 mp\n4: Back\nEnter a choice:");
+	        		// Check for valid input
+					while (ability>4 || ability<1){ ability = + prompt("Out of bounds.\n Enter a choice(1-4)"); }
+					while (isNaN(ability)){ ability = + prompt("Input must be an integer(1-4)"); }
 					switch(ability){
 						case 1: if (x.mp <2) console.log("Insufficient mana.\nOpposing " + y.name + " took advantage of your foolishness to attack.");
 								else { x.atk  *= 2;
@@ -148,7 +156,7 @@ function doBattle(x, y){
 						case 4: // Empty on purpose.
 							break;
 						} // End of Ability Switch
-	            		break; 
+	            break; 
 	        case 4: console.log(x.name + " has " + x.atk + " attack " + x.def + " defense " + x.mp + "/" + x.max_mp + " mana and " + x.hp + "/" + x.max_hp + " health.");
 	            break;
 	        case 5: console.log("Opposing " + y.name + " has " + y.atk + " attack " + y.def + " defense and " + y.hp + "/" + y.max_hp + " health.");
@@ -162,7 +170,7 @@ function doBattle(x, y){
 	}
 	else if (y.hp <= 0){
 		x.addExperience(y.xp_val);
-		console.log(x.name + " is the victor!\n" + x.name + " gained " + y.xp_val + " experience!\n" + "Current experience: " + x.exp + "/50.");
+		console.log(x.name + " is the victor!\n" + x.name + " gained " + y.xp_val + " experience!\n" + "Current experience: " + x.exp + "/" + x.goal_exp +".");
 	}
 	else {
 		console.log(y.name + " has slain you!");
