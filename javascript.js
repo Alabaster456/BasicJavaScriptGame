@@ -146,7 +146,7 @@ function doBattle(x, y){
 							break;
 						case 3: if (x.mp <3) console.log("Insufficient mana.\nOpposing " + y.name + " took advantage of your foolishness to attack.");
 								else { console.log(x.name + " uses Valiant Academy's power to recover " + Math.floor(x.max_hp * 0.2) + " health!");
-									x.hp=Math.min(x.max_hp,x.hp +=Math.floor(x.max_hp * 0.2));
+									x.hp=Math.min(x.max_hp, x.hp += Math.floor(x.max_hp * 0.4));
 									x.mp  -= 3;
 								}
 								x.hp  -= Math.max(0, (y.atk - x.def));
