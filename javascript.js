@@ -4,7 +4,7 @@ FAQ -
 read more: http://www.codecademy.com/glossary/javascript/ternary-operator
 * To create enemies Just use the enemy constructor (look at the example goblin on line 22, and the constructor itself on line 49)
 * Alternatively you can now use the createEnemy function passing only the name, and the difficulty you want  (1-5) or  easy, average, challenge, damn, and nightmare.
-* To add more battles just user (player, enemy)
+* To add more battles just use doBattle(player, enemy)
 * \n makes a new line. \t uses a tab space. 
 
 */
