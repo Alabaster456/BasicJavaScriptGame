@@ -16,7 +16,7 @@ var player = new Hero(playerName, 10, 3, 25, 7);
 
 var theDate = new Date();
 var theHour = theDate.getHours();
-function greet(name){ return theHour < 12 ? "Good Morning, " + name + "." : (theHour<18 ? "Good Afternoon, " + name + "." : "Good Evening, " + name + "."); }
+function greet(name){ return theHour < 12 ? "Good Morning, " + name + "." : (theHour < 18 ? "Good Afternoon, " + name + "." : "Good Evening, " + name + "."); }
 
 console.log(greet(playerName) + "\n\n\t\t Welcome to Valiant Academy!");
 console.log(" Valiant Academy is an institute that makes Heroes out of plebians.\nYou've always wanted to be a Hero, but do you have what it takes?\nYour first test will be defeating this goblin!");
