@@ -1,58 +1,58 @@
-#battle_canvas {
-	border: 3px groove yellow;
-}
+	#battle_canvas {
+		border: 3px groove yellow;
+	}
 
-ul#battle_menu { font-family: sans-serif; }
-	
-ul#battle_menu button {
-	font-family: Comic Sans MS; /* The ultimate troll font */
-	width: 100px;
-}
+	ul#battle_menu { font-family: sans-serif; }
+		
+	ul#battle_menu input {
+		font-family: Comic Sans MS; /* The ultimate troll font */
+		width: 100px;
+	}
 
-ul#battle_menu, ul#battle_menu ul, ul#battle_menu li {
-	margin: 0px;
-	padding: 0px;
-	list-style-type: none;
-}
+	ul#battle_menu, ul#battle_menu ul, ul#battle_menu li {
+		margin: 0px;
+		padding: 0px;
+		list-style-type: none;
+	}
 
-ul#battle_menu li { float: left; }
+	ul#battle_menu li { float: left; }
 
-ul#battle_menu li button {
-	color: white;
-	background-color: green;
-	padding: 3px;
-	border: 1px #ffffff outset;
-}
+	ul#battle_menu li input {
+		color: white;
+		background-color: green;
+		padding: 3px;
+		border: 1px #ffffff outset;
+	}
 
-ul#battle_menu li button:hover {
-	color: yellow;
-	background-color: green;
-	font-weight: bold;
-}
+	ul#battle_menu li input:hover {
+		color: yellow;
+		background-color: green;
+		font-weight: bold;
+	}
 
-ul#battle_menu li button:active {
-	color: #cccccc;
-	background-color: green;
-	border: 1px #ffffff inset;
-}
+	ul#battle_menu li input:active {
+		color: #cccccc;
+		background-color: green;
+		border: 1px #ffffff inset;
+	}
 
-ul#ability_menu { display: none; }
-ul#ability_menu li { float: none; }
+	ul#ability_menu { display: none; }
+	ul#ability_menu li { float: none; }
 
-ul#ability_menu li button {
-	padding: 0px;
-	margin: 0px;
-}
+	ul#ability_menu li input {
+		padding: 0px;
+		margin: 0px;
+	}
 
-ul#battle_menu li:hover ul#ability_menu {
-	display: block;
-	position: absolute;
-	font-size: 8px;
-}
+	ul#battle_menu li:hover ul#ability_menu {
+		display: block;
+		position: absolute;
+		font-size: 8px;
+	}
 
-ul#battle_menu li:hover ul#ability_menu li button {
-	display: block;
-	width: 10em;
-	border: none;
-	padding: 2px;
-}
+	ul#battle_menu li:hover ul#ability_menu li input {
+		display: block;
+		width: 10em;
+		border: none;
+		padding: 2px;
+	}
