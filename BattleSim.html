@@ -4,9 +4,13 @@
 	  <link rel='stylesheet' href='BattleSim.css'/>
 	  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	  <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
-	  <!--<script src='BattleSim.js'></script>-->
 	</head>
 	<body>
+		<div id="canvasContainer">
+			<canvas id="battle_canvas" width = "400px" height = "300px"></canvas>
+		</div>
+		<script src='BattleSim.js'></script>
+
 		<div id="mainContainer">
 			<ul id="battle_menu">
 				<li id="active"><button id="attack">Attack</button></li>
@@ -20,6 +24,6 @@
 				</li>
 				<li><button id="status">Status</button></li>
 			</ul>
-		</div>	
+		</div>
 	</body>
 </html>
