@@ -2,39 +2,39 @@
 <html>
 	<head>
 	  <link rel='stylesheet' href='BattleSim.css'/>
-	  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	  <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
 	</head>
 	<body>
 		<div id="canvasContainer">
 			<canvas id="battle_canvas" width = "400px" height = "300px"></canvas>
 		</div>
 		<script src='BattleSim.js'></script>
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
 
 		<div id="mainContainer">
 			<ul id="battle_menu">
 				<li id="active">
-					<button id="attack">Attack</button>
+					<input type="button" value="Attack" id="attack">
 				</li>
 				<li>
-					<button id="defend">Defend</button>
+					<input type="button" value="Defend" id="defend">
 				</li>
 				<li>
-					<button id="ability">Abilities</button>
+					<input type="button" value="Abilities" id="ability">
 					<ul id="ability_menu">
 						<li id="subactive">
-							<button id="power_attack">Power Attack - 2 mp</button>
+							<input type="button" value="Sunder - 2 mp" id="power_attack">
 						</li>
 						<li>
-							<button id="meditate">Meditate + 3 mp</button>
+							<input type="button" value="Meditate + 3 mp" id="meditate">
 						</li>
 						<li>
-							<button id="heal">Heal - 3 mp</button>
+							<input type="button" value="Heal - 3 mp" id="heal">
 						</li>
 					</ul>
 				</li>
 				<li>
-					<button id="status">Status</button>
+					<input type="button" value="Status" id="status">
 				</li>
 			</ul>
 		</div>
