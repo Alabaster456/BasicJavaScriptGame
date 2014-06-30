@@ -1,7 +1,12 @@
+#battle_canvas {
+	border: 3px groove yellow;
+}
+
 ul#battle_menu { font-family: sans-serif; }
 	
 ul#battle_menu button {
 	font-family: Comic Sans MS; /* The ultimate troll font */
+	width: 100px;
 }
 
 ul#battle_menu, ul#battle_menu ul, ul#battle_menu li {
