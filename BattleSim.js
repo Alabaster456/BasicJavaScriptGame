@@ -8,13 +8,14 @@ read more: http://www.codecademy.com/glossary/javascript/ternary-operator
 * \n makes a new line. \t uses a tab space. 
 
 TO DO:
+Feel free to post your suggestions and ideas here: 
 
 */
 
 var playerName = prompt("What is your name?");
-// playerName = fixName(playerName);
+playerName = fixName(playerName);
 // Creates player character with 10 attack, 3 defense, 25 hp, and 7 mp. 
-//var player = new Hero(playerName, 10, 3, 25, 7);
+var player = new Hero(playerName, 10, 3, 25, 7);
 
 var theDate = new Date();
 var theHour = theDate.getHours();
@@ -47,26 +48,37 @@ var maxWidth = 400;
 var lineHeight = 25;
 var x = (canvas.width - maxWidth) / 2;
 var y = 60;
+var vLogTime = 0; // To keep track of valiantLogX time-based calls
 context.fillStyle = "green";
 context.font = "bold 24px Georgia";
-text = "Let's see if this works. and also this this this this";
-// text = greet() + playerName + ". Welcome to BattleSim");
-wrapText(context, text, x, y, maxWidth, lineHeight);
+// Initital message
+valiantLog(greet() + playerName + ". Welcome to Valiant Academy.");
+valiantLogX("We hope you enjoy your time", 2);
 
 
-//context.fillText(greet(playerName) + " Welcome to Valiant Academy!", 60, canvas.height / 2);
-/*
-console.log(" Valiant Academy is an institute that makes Heroes out of plebians.\nYou've always wanted to be a Hero, but do you have what it takes?\nYour first test will be defeating this goblin!");
+valiantLogX("Valiant Academy is an institute that makes Heroes out of plebians.You've always wanted to be a Hero, but do you have what it takes? Your first test will be defeating this goblin!", 2);
+valiantLogX("Make your selections with the buttons below!", 5);
+function valiantLog(text) {
+	context.clearRect(0, 0, canvas.width , canvas.height);
+	wrapText(context, text, x, y, maxWidth, lineHeight)
+}
+// Wish I could overload this like in Java, sadness
+function valiantLogX(text, timer){
+	vLogTime += timer;
+	window.setTimeout(function() {
+    valiantLog(text)
+	}, vLogTime * 1000);
+}
 
 var goblin_01 = new Enemy("Goblin Scion", 5, 1, 20, 0, 5);
 doBattle(player, goblin_01);
 
-console.log("\nHeh, that was easy, but it looks like the goblin had a friend!");
+valiantLogX("Heh, that was easy, but it looks like the goblin had a friend!", 2);
 // Randomly generated enemy, name, and difficulty.
 var goblin_02 = createEnemy("Goblin Dirtbag", 2);
 doBattle(player, goblin_02);
 
-console.log("\nWe hope you had a fun time with Valiant Academy!");
+valiantLog("We hope you had a fun time with Valiant Academy!");
 
 
 // Capitalizes first letter and decapitalizes the rest, returns that as a string e.g. dErPy becomes Derpy.
@@ -135,87 +147,72 @@ function getIntBetween(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// battleMenu function to recursively obtain player decisions
-function battleMenu(){
-	selection = + prompt("\n Battle menu\n1: Attack\n2: Defend\n3: Abilities\n4: Status\n5: Enemy Status\n Enter a choice: ");
-	// Checks for valid input
-	while (selection > 5 || selection < 1){ selection = + prompt("Out of bounds.\n Enter a choice(1-5)"); }
-	while (isNaN(selection)){ selection = + prompt("Input must be an integer(1-5)"); }
-}
-
 function doBattle(x, y){
 	// Set hp and mp to max for new battle;
 	x.mp = x.max_mp;
 	x.hp = x.max_hp;
 	// Display current enemy
-	console.log("\t\t\tVS. " + y.name);
+	valiantLogX("                    VS. " + y.name, 2);
 	// Battle loop - heart of the game
-	do { battleMenu();
-		switch(selection){
-	        case 1: x.hp  -= Math.max(0, (y.atk - x.def));
-	            	y.hp  -= Math.max(0, (x.atk - y.def));
-	            	console.log(x.name + " deals " + Math.max(0,(x.atk - y.def)) + " damage and takes " + Math.max(0,(y.atk - x.def)) + " damage.\n" + x.name + " has " + Math.max(0,x.hp) + " health and the opposing " + y.name + " has " + Math.max(0,y.hp) + " health left." );
-	            break;
-	        case 2: x.def  *= 2;
-	            	x.hp  -= Math.max(0, (y.atk - x.def));
-	            	x.def /= 2;
-	            	console.log(x.name + " takes a defensive stance.\n" + x.name + " takes " + Math.max(0, (y.atk - x.def)) + " damage.\n" + x.name + " has " + Math.max(0,x.hp) + " health and the opposing " + y.name + " has " + Math.max(0,y.hp) + " health left.");
-	            break;
-	        case 3: var ability = + prompt("\n Ability menu\n1: Power Attack - 2 mp\n2: Meditate - gain 3 mp\n 3: Heal - 3 mp\n4: Back\nEnter a choice:");
-	        		// Check for valid input
-					while (ability>4 || ability<1){ ability = + prompt("Out of bounds.\n Enter a choice(1-4)"); }
-					while (isNaN(ability)){ ability = + prompt("Input must be an integer(1-4)"); }
-					switch(ability){
-						case 1: if (x.mp <2) console.log("Insufficient mana.\nOpposing " + y.name + " took advantage of your foolishness to attack.");
-								else { x.atk  *= 2;
-									console.log(x.name + "'s weapon is infused with mana!\n" + x.name + " deals " + Math.max(0, (x.atk - y.def)) + " damage and takes " + Math.max(0,(y.atk - x.def)) + " damage.");
-									y.hp  -= Math.max(0, (x.atk - y.def));
-									x.atk /= 2;x.mp  -= 2;
-								}
-								x.hp  -= Math.max(0, (y.atk - x.def));
-	            				console.log(x.name + " has " + Math.max(0, x.hp) + " health and the opposing " + y.name + " has " + Math.max(0, y.hp) + " health left.");
-							break;
-						case 2: console.log(x.name + " calls forth the mana of Valiant Academy.");
-								x.mp = Math.min(x.max_mp, x.mp += 3);
-								console.log(x.name + " takes " + Math.max(0, (y.atk - x.def)) + " damage.");
-								x.hp  -= Math.max(0, (y.atk - x.def));
-	            				console.log(x.name + " has " + Math.max(0, x.hp) + " health and the opposing " + y.name + " has " + Math.max(0, y.hp) + " health left.");
-							break;
-						case 3: if (x.mp <3) console.log("Insufficient mana.\nOpposing " + y.name + " took advantage of your foolishness to attack.");
-								else { console.log(x.name + " uses Valiant Academy's power to recover " + Math.floor(x.max_hp * 0.2) + " health!");
-									x.hp=Math.min(x.max_hp, x.hp += Math.floor(x.max_hp * 0.4));
-									x.mp  -= 3;
-								}
-								x.hp  -= Math.max(0, (y.atk - x.def));
-								console.log(x.name + " takes " + Math.max(0, (y.atk - x.def)) + " damage.");
-	            				console.log(x.name + " has " + Math.max(0, x.hp) + " health and the opposing " + y.name + " has " + Math.max(0, y.hp) + " health left.");
-							break;
-						case 4: // Empty on purpose.
-							break;
-						} // End of Ability Switch
-	            break; 
-	        case 4: console.log(x.name + " has " + x.atk + " attack " + x.def + " defense " + x.mp + "/" + x.max_mp + " mana and " + x.hp + "/" + x.max_hp + " health.");
-	            break;
-	        case 5: console.log("Opposing " + y.name + " has " + y.atk + " attack " + y.def + " defense and " + y.hp + "/" + y.max_hp + " health.");
-	            break;
+	do {
+		$("input[type='button']").click(function() {
+			switch(this.id){
+		        case 'attack': 
+		        	x.hp -= Math.max(0, (y.atk - x.def));
+		            y.hp -= Math.max(0, (x.atk - y.def));
+		            valiantLog(x.name + " deals " + Math.max(0,(x.atk - y.def)) + " damage and takes " + Math.max(0, (y.atk - x.def)) + " damage. " + x.name + " has " + Math.max(0,x.hp) + " health and the opposing " + y.name + " has " + Math.max(0,y.hp) + " health left." );
+		            break;
+		        case 'defend': 
+		        	x.def *= 2;
+		            x.hp -= Math.max(0, (y.atk - x.def));
+		            x.def /= 2;
+		            valiantLog(x.name + " takes a defensive stance. " + x.name + " takes " + Math.max(0, (y.atk - x.def)) + " damage. " + x.name + " has " + Math.max(0,x.hp) + " health and the opposing " + y.name + " has " + Math.max(0,y.hp) + " health left.");
+		            break;
+		        case 'power_attack': 
+		        	if (x.mp <2) valiantLogX("Insufficient mana. Opposing " + y.name + " took advantage of your foolishness to attack.", 1);
+					else {
+						x.atk  *= 2;
+						valiantLog(x.name + "'s weapon is infused with mana!" + x.name + " deals " + Math.max(0, (x.atk - y.def)) + " damage and takes " + Math.max(0,(y.atk - x.def)) + " damage.");
+						y.hp -= Math.max(0, (x.atk - y.def));
+						x.atk /= 2;x.mp -= 2;
+					}
+					x.hp -= Math.max(0, (y.atk - x.def));
+		            valiantLogX(x.name + " has " + Math.max(0, x.hp) + " health and the opposing " + y.name + " has " + Math.max(0, y.hp) + " health left.", 2);
+					break;
+				case 'meditate' : 
+					valiantLog(x.name + " calls forth the mana of Valiant Academy.");
+					x.mp = Math.min(x.max_mp, x.mp += 3);
+					valiantLogX(x.name + " takes " + Math.max(0, (y.atk - x.def)) + " damage.", 1);
+					x.hp -= Math.max(0, (y.atk - x.def));
+		            valiantLogX(x.name + " has " + Math.max(0, x.hp) + " health and the opposing " + y.name + " has " + Math.max(0, y.hp) + " health left.", 1);
+					break;
+				case 'heal' :
+					if (x.mp < 3) valiantLog("Insufficient mana. Opposing " + y.name + " took advantage of your foolishness to attack.");
+					else {
+						valiantLog(x.name + " uses Valiant Academy's power to recover " + Math.floor(x.max_hp * 0.2) + " health!");
+						x.hp=Math.min(x.max_hp, x.hp += Math.floor(x.max_hp * 0.4));
+						x.mp  -= 3;
+					}
+					x.hp -= Math.max(0, (y.atk - x.def));
+					valiantLogX(x.name + " takes " + Math.max(0, (y.atk - x.def)) + " damage.", 2);
+		           	valiantLogX(x.name + " has " + Math.max(0, x.hp) + " health and the opposing " + y.name + " has " + Math.max(0, y.hp) + " health left.", 1);
+					break;
+		        case 'status' :
+		        	valiantLog(x.name + " has " + x.atk + " attack " + x.def + " defense " + x.mp + "/" + x.max_mp + " mana and " + x.hp + "/" + x.max_hp + " health.");
+		        	valiantLogX("Opposing " + y.name + " has " + y.atk + " attack " + y.def + " defense and " + y.hp + "/" + y.max_hp + " health.", 2);
+		            break;
 				} // End of Selection Switch
-						
-			} while(x.hp > 0 && y.hp > 0);
-
-	if (x.hp <= 0 && y.hp <= 0){
-		console.log("It is a double K.O.");
+			});			
+		} while(x.hp > 0 && y.hp > 0);
+			
+	if (x.hp <= 0 && y.hp <= 0) {
+		valiantLogX("It is a double K.O.", 1);
 	}
-	else if (y.hp <= 0){
-		x.addExperience(y.xp_val);
-		console.log(x.name + " is the victor!\n" + x.name + " gained " + y.xp_val + " experience!\n" + "Current experience: " + x.exp + "/" + x.goal_exp +".");
+	else if (y.hp <= 0) {
+	x.addExperience(y.xp_val);
+	valiantLogX(x.name + " is the victor!" + x.name + " gained " + y.xp_val + " experience!" + " Current experience: " + x.exp + "/" + x.goal_exp +".", 1);
 	}
 	else {
-		console.log(y.name + " has slain you!");
+	valiantLogX(y.name + " has slain you!", 1);
 	}
 } // End of doBattle
-
-
-$(document).ready(function(){
-
-});
-*/
