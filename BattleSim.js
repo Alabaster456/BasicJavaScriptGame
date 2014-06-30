@@ -7,18 +7,55 @@ read more: http://www.codecademy.com/glossary/javascript/ternary-operator
 * To add more battles just use doBattle(player, enemy)
 * \n makes a new line. \t uses a tab space. 
 
+TO DO:
+
 */
 
 var playerName = prompt("What is your name?");
-playerName = fixName(playerName);
+// playerName = fixName(playerName);
 // Creates player character with 10 attack, 3 defense, 25 hp, and 7 mp. 
-var player = new Hero(playerName, 10, 3, 25, 7);
+//var player = new Hero(playerName, 10, 3, 25, 7);
 
 var theDate = new Date();
 var theHour = theDate.getHours();
-function greet(name){ return theHour < 12 ? "Good Morning, " + name + "." : (theHour < 18 ? "Good Afternoon, " + name + "." : "Good Evening, " + name + "."); }
+// Greet function that appropriates message according to time of day
+function greet(){ return theHour < 12 ? "Good Morning, " : (theHour < 18 ? "Good Afternoon, " : "Good Evening, "); }
 
-console.log(greet(playerName) + "\n\n\t\t Welcome to Valiant Academy!");
+function wrapText(context, text, x, y, maxWidth, lineHeight) {
+        var words = text.split(' ');
+        var line = '';
+
+        for(var n = 0; n < words.length; n++) {
+          var testLine = line + words[n] + ' ';
+          var metrics = context.measureText(testLine);
+          var testWidth = metrics.width;
+          if (testWidth > maxWidth && n > 0) {
+            context.fillText(line, x, y);
+            line = words[n] + ' ';
+            y += lineHeight;
+          }
+          else {
+            line = testLine;
+          }
+        }
+        context.fillText(line, x, y);
+      }
+
+var canvas = document.getElementById("battle_canvas");
+var context = canvas.getContext("2d");
+var maxWidth = 400;
+var lineHeight = 25;
+var x = (canvas.width - maxWidth) / 2;
+var y = 60;
+context.fillStyle = "green";
+context.font = "bold 24px Georgia";
+text = "Let's see if this works. and also this this this this";
+// text = greet() + playerName + ". Welcome to BattleSim");
+wrapText(context, text, x, y, maxWidth, lineHeight);
+
+
+//context.fillText(greet(playerName) + " Welcome to Valiant Academy!", 60, canvas.height / 2);
+/*
 console.log(" Valiant Academy is an institute that makes Heroes out of plebians.\nYou've always wanted to be a Hero, but do you have what it takes?\nYour first test will be defeating this goblin!");
 
 var goblin_01 = new Enemy("Goblin Scion", 5, 1, 20, 0, 5);
@@ -176,3 +213,9 @@ function doBattle(x, y){
 		console.log(y.name + " has slain you!");
 	}
 } // End of doBattle
+
+
+$(document).ready(function(){
+
+});
+*/
