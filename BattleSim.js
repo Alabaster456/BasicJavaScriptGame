@@ -17,9 +17,9 @@ Feel free to post your suggestions and ideas here:
 */
 
 var playerName = prompt("What is your name?");
-//playerName = fixName(playerName);
+playerName = fixName(playerName);
 // Creates player character with 10 attack, 3 defense, 25 hp, and 7 mp. 
-//var player = new Hero(playerName, 10, 3, 25, 7);
+var player = new Hero(playerName, 10, 3, 25, 7);
 
 var theDate = new Date();
 var theHour = theDate.getHours();
