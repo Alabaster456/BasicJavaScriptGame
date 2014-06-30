@@ -37,7 +37,7 @@ function wrapText(context, text, con_x, con_y, maxWidth, lineHeight) {
           if (testWidth > maxWidth && n > 0) {
             context.fillText(line, con_x, con_y);
             line = words[n] + ' ';
-            y += lineHeight;
+            con_y += lineHeight;
           }
           else {
             line = testLine;
@@ -156,7 +156,7 @@ function doBattle(x, y) {
 	x.mp = x.max_mp;
 	x.hp = x.max_hp;
 	// Display current enemy
-	valiantLogX("                    VS. " + y.name, 1);
+	valiantLogX("               VS. " + y.name, 1);
 	// Battle loop - heart of the game
 	do {
 		$("input[type='button']").click(function() {
