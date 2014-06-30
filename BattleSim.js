@@ -2,27 +2,31 @@
 FAQ -
 *the ternary: ? operator is basically a shortcut for if-else. condition ? runs if true : runs if false;
 read more: http://www.codecademy.com/glossary/javascript/ternary-operator
-* To create enemies Just use the enemy constructor (look at the example goblin on line 22, and the constructor itself on line 49)
+* To create enemies Just use the enemy constructor (look at the example goblin on line 73, and the constructor itself on line 107 & 120)
 * Alternatively you can now use the createEnemy function passing only the name, and the difficulty you want  (1-5) or  easy, average, challenge, damn, and nightmare.
 * To add more battles just use doBattle(player, enemy)
-* \n makes a new line. \t uses a tab space. 
+* Use valiantLog() instead of console.log for messages that should be displayed right away
+* Use valiantLogX("msg", seconds to wait) for timed messages
 
 TO DO:
 Feel free to post your suggestions and ideas here: 
-
+	*Fix whatever is broken
+	* Add more comments
+	* Reference shortcuts/methods/functions in an laternate file?
+	* Maybe break up the js files so things are a bit simpler
 */
 
 var playerName = prompt("What is your name?");
-playerName = fixName(playerName);
+//playerName = fixName(playerName);
 // Creates player character with 10 attack, 3 defense, 25 hp, and 7 mp. 
-var player = new Hero(playerName, 10, 3, 25, 7);
+//var player = new Hero(playerName, 10, 3, 25, 7);
 
 var theDate = new Date();
 var theHour = theDate.getHours();
 // Greet function that appropriates message according to time of day
 function greet(){ return theHour < 12 ? "Good Morning, " : (theHour < 18 ? "Good Afternoon, " : "Good Evening, "); }
 
-function wrapText(context, text, x, y, maxWidth, lineHeight) {
+function wrapText(context, text, con_x, con_y, maxWidth, lineHeight) {
         var words = text.split(' ');
         var line = '';
 
@@ -31,7 +35,7 @@ function wrapText(context, text, x, y, maxWidth, lineHeight) {
           var metrics = context.measureText(testLine);
           var testWidth = metrics.width;
           if (testWidth > maxWidth && n > 0) {
-            context.fillText(line, x, y);
+            context.fillText(line, con_x, con_y);
             line = words[n] + ' ';
             y += lineHeight;
           }
@@ -39,15 +43,15 @@ function wrapText(context, text, x, y, maxWidth, lineHeight) {
             line = testLine;
           }
         }
-        context.fillText(line, x, y);
+        context.fillText(line, con_x, con_y);
       }
 
 var canvas = document.getElementById("battle_canvas");
 var context = canvas.getContext("2d");
 var maxWidth = 400;
 var lineHeight = 25;
-var x = (canvas.width - maxWidth) / 2;
-var y = 60;
+var con_x = (canvas.width - maxWidth) / 2;
+var con_y = 60;
 var vLogTime = 0; // To keep track of valiantLogX time-based calls
 context.fillStyle = "green";
 context.font = "bold 24px Georgia";
@@ -60,7 +64,7 @@ valiantLogX("Valiant Academy is an institute that makes Heroes out of plebians.Y
 valiantLogX("Make your selections with the buttons below!", 5);
 function valiantLog(text) {
 	context.clearRect(0, 0, canvas.width , canvas.height);
-	wrapText(context, text, x, y, maxWidth, lineHeight)
+	wrapText(context, text, con_x, con_y, maxWidth, lineHeight)
 }
 // Wish I could overload this like in Java, sadness
 function valiantLogX(text, timer){
@@ -78,7 +82,7 @@ valiantLogX("Heh, that was easy, but it looks like the goblin had a friend!", 2)
 var goblin_02 = createEnemy("Goblin Dirtbag", 2);
 doBattle(player, goblin_02);
 
-valiantLog("We hope you had a fun time with Valiant Academy!");
+valiantLogX("We hope you had a fun time with Valiant Academy!", 1);
 
 
 // Capitalizes first letter and decapitalizes the rest, returns that as a string e.g. dErPy becomes Derpy.
@@ -86,7 +90,7 @@ function fixName(name){ return name.length > 1 ? name.substring(0,1).toUpperCase
 
 
 // Creates the player character with stats
-function Hero(name, atk, def, hp, mp){
+function Hero(name, atk, def, hp, mp) {
     this.name = name;
 	this.atk = atk;
 	this.def = def;
@@ -104,7 +108,7 @@ function Hero(name, atk, def, hp, mp){
 
 var totalEnemies = 0;
 // Enemy Constructor
-function Enemy(name, atk, def, hp, mp, xp_val){
+function Enemy(name, atk, def, hp, mp, xp_val) {
 	this.name = name;
 	this.atk = atk;
 	this.def= def;
@@ -117,7 +121,7 @@ function Enemy(name, atk, def, hp, mp, xp_val){
 }
 
 // Random enemy constructor, only pass name, and difficulty(1 - 5) or easy, average, challenge, damn, and nightmare
-function createEnemy(name, difficulty){
+function createEnemy(name, difficulty) {
 	var atk = getIntBetween(3, 7);
 	var def = getIntBetween (0, 3);
 	var hp = getIntBetween(10, 25);
@@ -147,12 +151,12 @@ function getIntBetween(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function doBattle(x, y){
+function doBattle(x, y) {
 	// Set hp and mp to max for new battle;
 	x.mp = x.max_mp;
 	x.hp = x.max_hp;
 	// Display current enemy
-	valiantLogX("                    VS. " + y.name, 2);
+	valiantLogX("                    VS. " + y.name, 1);
 	// Battle loop - heart of the game
 	do {
 		$("input[type='button']").click(function() {
