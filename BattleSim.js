@@ -27,14 +27,14 @@ var theHour = theDate.getHours();
 function greet(){ return theHour < 12 ? "Good Morning, " : (theHour < 18 ? "Good Afternoon, " : "Good Evening, "); }
 
 function wrapText(context, text, con_x, con_y, maxWidth, lineHeight) {
-        var words = text.split(' ');
-        var line = '';
+    var words = text.split(' ');
+    var line = '';
 
-        for(var n = 0; n < words.length; n++) {
-          var testLine = line + words[n] + ' ';
-          var metrics = context.measureText(testLine);
-          var testWidth = metrics.width;
-          if (testWidth > maxWidth && n > 0) {
+    for(var n = 0; n < words.length; n++) {
+    	var testLine = line + words[n] + ' ';
+    	var metrics = context.measureText(testLine);
+    	var testWidth = metrics.width;
+        if (testWidth > maxWidth && n > 0) {
             context.fillText(line, con_x, con_y);
             line = words[n] + ' ';
             con_y += lineHeight;
@@ -158,37 +158,37 @@ function doBattle(x, y) {
 	// Display current enemy
 	valiantLogX("               VS. " + y.name, 1);
 	// Battle loop - heart of the game
-	do {
+	$(document).ready(function(){
 		$("input[type='button']").click(function() {
 			switch(this.id){
-		        case 'attack': 
-		        	x.hp -= Math.max(0, (y.atk - x.def));
-		            y.hp -= Math.max(0, (x.atk - y.def));
-		            valiantLog(x.name + " deals " + Math.max(0,(x.atk - y.def)) + " damage and takes " + Math.max(0, (y.atk - x.def)) + " damage. " + x.name + " has " + Math.max(0,x.hp) + " health and the opposing " + y.name + " has " + Math.max(0,y.hp) + " health left." );
-		            break;
-		        case 'defend': 
-		        	x.def *= 2;
-		            x.hp -= Math.max(0, (y.atk - x.def));
-		            x.def /= 2;
-		            valiantLog(x.name + " takes a defensive stance. " + x.name + " takes " + Math.max(0, (y.atk - x.def)) + " damage. " + x.name + " has " + Math.max(0,x.hp) + " health and the opposing " + y.name + " has " + Math.max(0,y.hp) + " health left.");
-		            break;
-		        case 'power_attack': 
-		        	if (x.mp <2) valiantLogX("Insufficient mana. Opposing " + y.name + " took advantage of your foolishness to attack.", 1);
+			    case 'attack': 
+			        x.hp -= Math.max(0, (y.atk - x.def));
+			        y.hp -= Math.max(0, (x.atk - y.def));
+			        valiantLog(x.name + " deals " + Math.max(0,(x.atk - y.def)) + " damage and takes " + Math.max(0, (y.atk - x.def)) + " damage. " + x.name + " has " + Math.max(0,x.hp) + " health and the opposing " + y.name + " has " + Math.max(0,y.hp) + " health left." );
+			        break;
+			    case 'defend': 
+			    	x.def *= 2;
+			        x.hp -= Math.max(0, (y.atk - x.def));
+			        x.def /= 2;
+			        valiantLog(x.name + " takes a defensive stance. " + x.name + " takes " + Math.max(0, (y.atk - x.def)) + " damage. " + x.name + " has " + Math.max(0,x.hp) + " health and the opposing " + y.name + " has " + Math.max(0,y.hp) + " health left.");
+			        break;
+			    case 'power_attack': 
+			       	if (x.mp <2) valiantLogX("Insufficient mana. Opposing " + y.name + " took advantage of your foolishness to attack.", 1);
 					else {
 						x.atk  *= 2;
-						valiantLog(x.name + "'s weapon is infused with mana!" + x.name + " deals " + Math.max(0, (x.atk - y.def)) + " damage and takes " + Math.max(0,(y.atk - x.def)) + " damage.");
+						valiantLog(x.name + "'s weapon is infused with mana! " + x.name + " deals " + Math.max(0, (x.atk - y.def)) + " damage and takes " + Math.max(0,(y.atk - x.def)) + " damage.");
 						y.hp -= Math.max(0, (x.atk - y.def));
 						x.atk /= 2;x.mp -= 2;
 					}
 					x.hp -= Math.max(0, (y.atk - x.def));
-		            valiantLogX(x.name + " has " + Math.max(0, x.hp) + " health and the opposing " + y.name + " has " + Math.max(0, y.hp) + " health left.", 2);
+			        valiantLogX(x.name + " has " + Math.max(0, x.hp) + " health and the opposing " + y.name + " has " + Math.max(0, y.hp) + " health left.", 2);
 					break;
 				case 'meditate' : 
 					valiantLog(x.name + " calls forth the mana of Valiant Academy.");
 					x.mp = Math.min(x.max_mp, x.mp += 3);
 					valiantLogX(x.name + " takes " + Math.max(0, (y.atk - x.def)) + " damage.", 1);
 					x.hp -= Math.max(0, (y.atk - x.def));
-		            valiantLogX(x.name + " has " + Math.max(0, x.hp) + " health and the opposing " + y.name + " has " + Math.max(0, y.hp) + " health left.", 1);
+			        valiantLogX(x.name + " has " + Math.max(0, x.hp) + " health and the opposing " + y.name + " has " + Math.max(0, y.hp) + " health left.", 1);
 					break;
 				case 'heal' :
 					if (x.mp < 3) valiantLog("Insufficient mana. Opposing " + y.name + " took advantage of your foolishness to attack.");
@@ -199,16 +199,16 @@ function doBattle(x, y) {
 					}
 					x.hp -= Math.max(0, (y.atk - x.def));
 					valiantLogX(x.name + " takes " + Math.max(0, (y.atk - x.def)) + " damage.", 2);
-		           	valiantLogX(x.name + " has " + Math.max(0, x.hp) + " health and the opposing " + y.name + " has " + Math.max(0, y.hp) + " health left.", 1);
+			        valiantLogX(x.name + " has " + Math.max(0, x.hp) + " health and the opposing " + y.name + " has " + Math.max(0, y.hp) + " health left.", 1);
 					break;
-		        case 'status' :
-		        	valiantLog(x.name + " has " + x.atk + " attack " + x.def + " defense " + x.mp + "/" + x.max_mp + " mana and " + x.hp + "/" + x.max_hp + " health.");
-		        	valiantLogX("Opposing " + y.name + " has " + y.atk + " attack " + y.def + " defense and " + y.hp + "/" + y.max_hp + " health.", 2);
+			    case 'status' :
+			       	valiantLog(x.name + " has " + x.atk + " attack " + x.def + " defense " + x.mp + "/" + x.max_mp + " mana and " + x.hp + "/" + x.max_hp + " health.");
+			       	valiantLogX("Opposing " + y.name + " has " + y.atk + " attack " + y.def + " defense and " + y.hp + "/" + y.max_hp + " health.", 2);
 		            break;
-				} // End of Selection Switch
-			});			
-		} while(x.hp > 0 && y.hp > 0);
-			
+			} // End of Selection Switch
+		});
+	});
+	
 	if (x.hp <= 0 && y.hp <= 0) {
 		valiantLogX("It is a double K.O.", 1);
 	}
